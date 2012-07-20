@@ -1,0 +1,71 @@
+-----------------------------------
+REMOTE COMPUTE APPLICAION PROTOTYPE
+-----------------------------------
+
+PLATFORM: QT & C++
+Author: Pranjal Mittal
+Date: 21/07/2012
+
+DIRECTORIES / PROJECT LAYOUT:
+----------------
+-1- rc_client
+
+-2- rc_server
+    -2.1- program
+  
+(File Names have been omited in this directory listing)
+-1- => Client Application, that can be installed on the client Computer.
+
+-2- => Server Application, along with the sub project called "program" (that carries out the main computation.)
+       This directory has to be stored on the Server Side and the server should be started before running the client.
+
+#######################################################################################################################################
+1)
+The idea behind remote compute is to be able to run a Computing Program on a separate machine say a Server or on the Cloud.
+This may be desired in several cases where computaionally intensive problems are encountered.
+
+2)
+In such cases, the computation can be made at the SERVER end which has a high processing power and the client will just be used to send
+the initial input and receive the final response.
+
+3)
+The input is given via the "rc_client" that connects to the "rc_server", ie. A TCP / IP connection is established between "rc_client"
+and "rc_server"
+
+4) 
+"rc_server" receives the number, decodes it and calls the PROGRAM console application providing this decoded number as input, whose task is to carry out the main computation.
+Note: rc_server just acts as an intermediate to receive the input in the form of bytes, and to decode it to get back the integer input at the client end.
+It also reads the computed_result from the PROGRAM and sends back the output to the client.
+
+5)! The result as computed by the PROGRAM (on server) is returned in the form of an integer exit code, that is read by the "rc_server"
+     Currently this idea has been used by me to carry out an inter-process communcation, which can be improved subsequently, since EXIT
+     CODES are limited to INT types only.
+     
+6) rc_server sends back this computed output to the rc_client, which displays it on the terminal.
+
+
+NOTE:
+For now the PROGRAM
+
+//////////////////////////////////////////////////
+REMOTE_COMPUTE CURRENT VERSION USAGE INSTRUCTIONS:
+//////////////////////////////////////////////////
+
+(I have written the Linux usage instructions here, but its not tough to figure out, how to use this on Windows)
+
+###########################
+COMMAND: To start rc_server
+---------------------------
+
+    sudo ./rc_server
+
+
+###########################
+COMMAND: To start rc_client
+---------------------------
+
+    ./rc_client <NUMBER>
+
+Example: ./rc_client 10
+
+
